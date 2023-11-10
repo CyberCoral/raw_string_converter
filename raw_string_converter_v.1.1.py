@@ -25,7 +25,7 @@ escapes = {"\ " : "\\ ",
 ### it will transform a "raw" string into a "pythonic" text.
 ###
 
-def raw(s: str,raw_or_print: bool = False) -> str:
+def raw(s: str,raw_to_text: bool = False,*,print_: bool = False) -> str:
     '''
     It takes a str to convert it either:
     - From text to "raw" (False) or,
@@ -35,12 +35,12 @@ def raw(s: str,raw_or_print: bool = False) -> str:
     for i in range(len(list(escapes.keys()))):
         
         a = list(escapes.keys())[i]
-        if raw_or_print == False:
+        if raw_to_text == False:
             s = s.replace(a,escapes[a])
         else:
             s = s.replace(escapes[a],a)
             
-    if raw_or_print == False:
+    if print_ == False:
         return s
     else:
         print(str(s))
