@@ -36,19 +36,18 @@ def raw(s: str,raw_to_text: bool = False,*,print_: bool = False, file_: str = ""
     "raw" or "pythonic" text.
     '''
     if file_ != "":
-        from re import search
+        import re
         with open(file_,"r") as f:
             s = f.read()
         file_ = file_[0:re.search(".py$",file_).start()] + (lambda s: "_raw" if s == False else "_normal")(raw_to_text) + ".py"
 
-    if (file_ != "" and raw_to_text == True) or file_ == "":
-        for i in range(len(list(escapes.keys()))):
-            
-            a = list(escapes.keys())[i]
-            if raw_to_text == False:
-                s = s.replace(a,escapes[a])
-            else:
-                s = s.replace(escapes[a],a)
+    for i in range(len(list(escapes.keys()))):
+        
+        a = list(escapes.keys())[i]
+        if raw_to_text == False:
+            s = s.replace(a,escapes[a])
+        else:
+            s = s.replace(escapes[a],a)
 
     if file_ != "":
         file = open(file_, "w")     
@@ -62,3 +61,4 @@ def raw(s: str,raw_to_text: bool = False,*,print_: bool = False, file_: str = ""
         print(str(s))
 
 # https://github.com/CyberCoral
+
