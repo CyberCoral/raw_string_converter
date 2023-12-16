@@ -1,3 +1,11 @@
+# ver. Sat/11/Nov/2023
+#
+# Made by: CyberCoral
+# ------------------------------------------------
+# Github:
+# https://www.github.com/CyberCoral
+#
+
 # A dictionary with the accepted escapes, based on
 # https://docs.python.org/es/3/reference/lexical_analysis.html#escape-sequences
 
@@ -88,5 +96,3 @@ def raw(s: str,raw_to_text: bool = False,*,print_: bool = False, file_: str = ""
         return s
     elif print_ == True:
         print(str(s))
-
-# https://github.com/CyberCoral
