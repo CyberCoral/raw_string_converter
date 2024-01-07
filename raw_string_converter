@@ -1,4 +1,4 @@
-# ver. Sat/11/Nov/2023
+# ver. Mon/08/Jan/2024
 #
 # Made by: CyberCoral
 # ------------------------------------------------
@@ -73,11 +73,11 @@ def raw(s: str,raw_to_text: bool = False,*,print_: bool = False, file_: str = ""
             raise TypeError("print_ must be a bool value.")
         
     if file_ != "":
-        import re
         with open(file_,"r") as f:
             s = f.read()
-        file_ = file_[0:re.search(".py$",file_).start()] + (lambda s: "_raw" if s == False else "_normal")(raw_to_text) + ".py"
-
+        extension = '.'+'.'.join(path.split('.')[-1*(len(path.split('.'))-1):])
+        file_ = file_.split('.')[0] + (lambda s: "_raw" if s == False else "_normal")(raw_to_text) + extension
+        
     for i in range(len(list(escapes.keys()))):
         
         a = list(escapes.keys())[i]
