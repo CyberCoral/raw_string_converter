@@ -75,11 +75,13 @@ def raw(s: str,raw_to_text: bool = False,*,print_: bool = False, file_: str = ""
     if file_ != "":
         with open(file_,"r") as f:
             s = f.read()
-        extension = '.'+'.'.join(path.split('.')[-1*(len(path.split('.'))-1):])
+        if file_.split('.')[0] != file_:
+          extension = ('.'+'.'.join(path.split('.')[-1*(len(path.split('.'))-1):]))
+        else:
+          extension = ""
         file_ = file_.split('.')[0] + (lambda s: "_raw" if s == False else "_normal")(raw_to_text) + extension
         
-    for i in range(len(list(escapes.keys()))):
-        
+    for i in range(len(list(escapes.keys()))):        
         a = list(escapes.keys())[i]
         if raw_to_text == False:
             s = s.replace(a,escapes[a])
