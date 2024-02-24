@@ -1,4 +1,4 @@
-# ver. Mon/08/Jan/2024
+# ver. Sat/24/Feb/2024
 #
 # Made by: CyberCoral
 # ------------------------------------------------
@@ -22,6 +22,11 @@ escapes = {"\ " : "\\ ",
                    "\ooo" : "\\ooo",
                    }
 
+# The only imported module of the program
+# It is used to disable warnings coming from the "invalid" escapes.
+import warnings
+warnings.filterwarnings("ignore")
+
 ###
 ### raw_string_converter's core, raw()
 ### Its use is to convert all the escapes into their escaped versions
@@ -38,10 +43,12 @@ escapes = {"\ " : "\\ ",
 ### and then export it into another file, whose name is similar to the
 ### original's.
 ###
-### Also, if raw_to_text and file_ are lists, with 
+### Also, if raw_to_text and file_ are lists, the program can
+### convert multiple files at once, expanding the possibilities of use 
+### of the program. 
 ###
 
-def raw(s: str,raw_to_text: bool = False,*,print_: bool = False, file_: str = "") -> str:
+def raw(s: str,raw_to_text: bool = False,*,print_: bool = False, file_: str = "",commas_: bool = True) -> str:
     '''
     It takes a str to convert it either:
     - From text to "raw" (False) or,
@@ -76,7 +83,7 @@ def raw(s: str,raw_to_text: bool = False,*,print_: bool = False, file_: str = ""
         with open(file_,"r") as f:
             s = f.read()
         if file_.split('.')[0] != file_:
-          extension = ('.'+'.'.join(path.split('.')[-1*(len(path.split('.'))-1):]))
+          extension = ('.'+'.'.join(file_.split('.')[-1*(len(file_.split('.'))-1):]))
         else:
           extension = ""
         file_ = file_.split('.')[0] + (lambda s: "_raw" if s == False else "_normal")(raw_to_text) + extension
@@ -89,8 +96,12 @@ def raw(s: str,raw_to_text: bool = False,*,print_: bool = False, file_: str = ""
             s = s.replace(escapes[a],a)
 
     if file_ != "":
-        file = open(file_, "w")     
-        file.write(f"'''{s}'''")
+        file = open(file_, "w")
+        if commas_ == True:    
+            file.write(f"'''{s}'''")
+        else:
+            file.write(f"{s}")
+
         file.close()
         print("File {} was successfully created!".format(file_))      
             
