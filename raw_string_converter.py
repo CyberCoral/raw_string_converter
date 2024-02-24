@@ -103,7 +103,8 @@ def raw(s: str,raw_to_text: bool = False,*,print_: bool = False, file_: str = ""
             file.write(f"{s}")
 
         file.close()
-        print("File {} was successfully created!".format(file_))      
+        print("File {} was successfully created!".format(file_))  
+        return file_
             
     if print_ == False and file_ == "":
         return s
