@@ -1,31 +1,10 @@
-# ver. Sat/24/Feb/2024
+# ver. Thu/19/Jun/2025
 #
 # Made by: CyberCoral
 # ------------------------------------------------
 # Github:
 # https://www.github.com/CyberCoral
 #
-
-# A dictionary with the accepted escapes, based on
-# https://docs.python.org/es/3/reference/lexical_analysis.html#escape-sequences
-
-escapes = {"\ " : "\\ ",
-                    "\'" : "\\'",
-                   '\"' : '\\"',
-                   "\a" : "\\a",
-                   "\b" : "\\b",
-                   "\f" : "\\f",
-                   "\n" : "\\n",
-                   "\r" : "\\r",
-                   "\t" : "\\t",
-                   "\v" : "\\v",
-                   "\ooo" : "\\ooo",
-                   }
-
-# The only imported module of the program
-# It is used to disable warnings coming from the "invalid" escapes.
-import warnings
-warnings.filterwarnings("ignore")
 
 ###
 ### raw_string_converter's core, raw()
@@ -46,6 +25,10 @@ warnings.filterwarnings("ignore")
 ### Also, if raw_to_text and file_ are lists, the program can
 ### convert multiple files at once, expanding the possibilities of use 
 ### of the program. 
+###
+
+###
+### Now without modules, pure Python3.
 ###
 
 def raw(s: str,raw_to_text: bool = False,*,print_: bool = False, file_: str = "",commas_: bool = True) -> str:
@@ -87,13 +70,13 @@ def raw(s: str,raw_to_text: bool = False,*,print_: bool = False, file_: str = ""
         else:
           extension = ""
         file_ = file_.split('.')[0] + (lambda s: "_raw" if s == False else "_normal")(raw_to_text) + extension
+             
         
-    for i in range(len(list(escapes.keys()))):        
-        a = list(escapes.keys())[i]
-        if raw_to_text == False:
-            s = s.replace(a,escapes[a])
-        else:
-            s = s.replace(escapes[a],a)
+    if raw_to_text == False:
+        s = s.encode('unicode_escape').decode()
+    else:
+        s = s.encode('latin-1', errors='backslashreplace').decode('unicode-escape')
+        
 
     if file_ != "":
         file = open(file_, "w")
